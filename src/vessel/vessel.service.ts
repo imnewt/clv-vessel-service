@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 import { Vessel as VesselEntity } from 'src/entities';
+import { FilterDto } from 'src/dtos/filter.dto';
 
 @Injectable()
 export class VesselService {
@@ -11,7 +12,20 @@ export class VesselService {
     private readonly vesselRepository: Repository<VesselEntity>,
   ) {}
 
-  async getAllVessels() {
-    return await this.vesselRepository.find();
+  async getAllVessels(filter: FilterDto) {
+    const { searchTerm, pageNumber, pageSize } = filter;
+    const [vessels, total] = await this.vesselRepository.findAndCount({
+      where: [
+        {
+          vsl_eng_nm: ILike(`%${searchTerm}%`),
+        },
+      ],
+      order: {
+        cre_dt: 'desc',
+      },
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+    });
+    return { vessels, total };
   }
 }
