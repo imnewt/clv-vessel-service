@@ -2,16 +2,16 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 
-import { Vessel as VesselEntity } from 'src/entities';
-import { FilterDto } from 'src/dtos/filter.dto';
-import UpdateVesselDto from 'src/dtos/update-vessel.dto';
-import CreateVesselDto from 'src/dtos/create-vessel.dto';
+import UpdateVesselDto from 'src/modules/vessel/dtos/update-vessel.dto';
+import CreateVesselDto from 'src/modules/vessel/dtos/create-vessel.dto';
+import { Vessel } from 'src/shared/entities';
+import { FilterDto } from 'src/shared/dtos/filter.dto';
 
 @Injectable()
 export class VesselService {
   constructor(
-    @InjectRepository(VesselEntity)
-    private readonly vesselRepository: Repository<VesselEntity>,
+    @InjectRepository(Vessel)
+    private readonly vesselRepository: Repository<Vessel>,
   ) {}
 
   async getAllVessels(filter: FilterDto) {

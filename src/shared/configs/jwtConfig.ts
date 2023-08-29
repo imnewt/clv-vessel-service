@@ -1,6 +1,6 @@
 import { JwtModuleOptions } from '@nestjs/jwt';
 
-import { jwtConstants } from 'src/utils/constants';
+import { jwtConstants } from 'src/shared/utilities/constants';
 
 export const jwtConfig: JwtModuleOptions = {
   global: true,
