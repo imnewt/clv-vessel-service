@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { databaseConfig } from './shared/configs/databaseConfig';
-import { VesselModule } from './modules/vessel/vessel.module';
+import { VesselModule } from '@vessel/vessel.module';
+import { databaseConfig } from '@shared/configs/databaseConfig';
 
 @Module({
   imports: [TypeOrmModule.forRoot(databaseConfig), VesselModule],

@@ -2,10 +2,10 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 
-import UpdateVesselDto from 'src/modules/vessel/dtos/update-vessel.dto';
-import CreateVesselDto from 'src/modules/vessel/dtos/create-vessel.dto';
-import { Vessel } from 'src/shared/entities';
-import { FilterDto } from 'src/shared/dtos/filter.dto';
+import UpdateVesselDto from '@vessel/dtos/update-vessel.dto';
+import CreateVesselDto from '@vessel/dtos/create-vessel.dto';
+import { Vessel } from '@shared/entities';
+import { FilterDto } from '@shared/dtos/filter.dto';
 
 @Injectable()
 export class VesselService {

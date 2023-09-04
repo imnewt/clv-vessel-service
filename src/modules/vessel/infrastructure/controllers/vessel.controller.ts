@@ -9,11 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { VesselService } from '../../services/vessel.service';
-import CreateVesselDto from 'src/modules/vessel/dtos/create-vessel.dto';
-import UpdateVesselDto from 'src/modules/vessel/dtos/update-vessel.dto';
-import { Permission } from 'src/shared/decorators/permission.decorator';
-import { PERMISSION } from 'src/shared/utilities/constants';
+import { VesselService } from '@vessel/services/vessel.service';
+import CreateVesselDto from '@vessel/dtos/create-vessel.dto';
+import UpdateVesselDto from '@vessel/dtos/update-vessel.dto';
+import { Permission } from '@shared/decorators/permission.decorator';
+import { PERMISSION } from '@shared/utilities/constants';
 
 @Controller('vessels')
 export class VesselController {
