@@ -19,6 +19,15 @@ export enum PERMISSION {
   DELETE_VESSEL = '13',
 }
 
+export enum MODULE {
+  VESSEL = 'vessel',
+}
+
+export enum ERROR {
+  VESSEL_CODE_HAS_BEEN_USED = 'Vessel code has been used!',
+  VESSEL_NOT_FOUND = 'Vessel not found!',
+}
+
 export const jwtConstants = {
   secret:
     'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 
@@ -6,6 +6,8 @@ import UpdateVesselDto from '@vessel/dtos/update-vessel.dto';
 import CreateVesselDto from '@vessel/dtos/create-vessel.dto';
 import { Vessel } from '@shared/entities';
 import { FilterDto } from '@shared/dtos/filter.dto';
+import { BusinessException } from '@shared/exceptions/business.exception';
+import { ERROR, MODULE } from '@shared/utilities/constants';
 
 @Injectable()
 export class VesselService {
@@ -31,10 +33,18 @@ export class VesselService {
     return { vessels, total };
   }
 
-  getVesselById(vesselId: string) {
-    return this.vesselRepository.findOne({
+  async getVesselById(vesselId: string) {
+    const vessel = await this.vesselRepository.findOne({
       where: { id: vesselId },
     });
+    if (!vessel) {
+      throw new BusinessException(
+        MODULE.VESSEL,
+        [ERROR.VESSEL_NOT_FOUND],
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return vessel;
   }
 
   getVesselByCode(vesselCode: string) {
@@ -46,7 +56,11 @@ export class VesselService {
   async createVessel(dto: CreateVesselDto) {
     const vessel = await this.getVesselByCode(dto.vsl_cd);
     if (vessel) {
-      throw new BadRequestException('Vessel code has been used!');
+      throw new BusinessException(
+        MODULE.VESSEL,
+        [ERROR.VESSEL_CODE_HAS_BEEN_USED],
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const newVessel = this.vesselRepository.create({
       ...dto,
@@ -58,9 +72,6 @@ export class VesselService {
 
   async updateVessel(vesselId: string, updateVesselDto: UpdateVesselDto) {
     const vessel = await this.getVesselById(vesselId);
-    if (!vessel) {
-      throw new BadRequestException('Vessel not found!');
-    }
     const updatedVessel = {
       ...vessel,
       ...updateVesselDto,
@@ -71,9 +82,6 @@ export class VesselService {
 
   async deleteVessel(vesselId: string) {
     const vessel = await this.getVesselById(vesselId);
-    if (!vessel) {
-      throw new Error(`Vessel with id ${vesselId} not found!`);
-    }
     return await this.vesselRepository.remove(vessel);
   }
 }
