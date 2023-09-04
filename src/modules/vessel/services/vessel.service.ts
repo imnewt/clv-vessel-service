@@ -2,8 +2,8 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 
-import UpdateVesselDto from '@vessel/dtos/update-vessel.dto';
-import CreateVesselDto from '@vessel/dtos/create-vessel.dto';
+import { UpdateVesselDto } from '@vessel/dtos/update-vessel.dto';
+import { CreateVesselDto } from '@vessel/dtos/create-vessel.dto';
 import { Vessel } from '@shared/entities';
 import { FilterDto } from '@shared/dtos/filter.dto';
 import { BusinessException } from '@shared/exceptions/business.exception';

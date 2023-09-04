@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export default class UpdateVesselDto {
+export class UpdateVesselDto {
   @IsNotEmpty()
   vsl_cd: string;
 

@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 
 import { VesselService } from '@vessel/services/vessel.service';
-import CreateVesselDto from '@vessel/dtos/create-vessel.dto';
-import UpdateVesselDto from '@vessel/dtos/update-vessel.dto';
+import { CreateVesselDto } from '@vessel/dtos/create-vessel.dto';
+import { UpdateVesselDto } from '@vessel/dtos/update-vessel.dto';
 import { Permission } from '@shared/decorators/permission.decorator';
 import { PERMISSION } from '@shared/utilities/constants';
 
