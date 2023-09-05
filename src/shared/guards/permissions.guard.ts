@@ -1,23 +1,18 @@
 import {
-  BadRequestException,
   CanActivate,
   ExecutionContext,
+  HttpStatus,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
 
 import { PERMISSION_KEY } from '@shared/decorators/permission.decorator';
-import { jwtConstants } from '@shared/utilities/constants';
+import { BusinessException } from '@shared/exceptions/business.exception';
+import { ERROR, MODULE } from '@shared/utilities/constants';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
-  constructor(
-    private readonly jwtService: JwtService,
-    private readonly reflector: Reflector,
-  ) {}
+  constructor(private readonly reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const neededPermission = this.reflector.get<string>(
@@ -25,30 +20,31 @@ export class PermissionGuard implements CanActivate {
       context.getHandler(),
     );
 
-    if (!neededPermission) {
-      return true;
-    }
-    const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
-    if (!token) {
-      throw new UnauthorizedException();
-    }
+    if (!neededPermission) return true;
+
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret,
-      });
-      const { permissions } = payload;
-      const hasPermission = permissions.find(
+      const request = context.switchToHttp().getRequest();
+      const userPermissions =
+        JSON.parse(request.headers['user-permissions']) || [];
+
+      const hasPermission = userPermissions.find(
         (permission) => permission.id === neededPermission,
       );
-      return !!hasPermission;
-    } catch {
-      throw new BadRequestException();
-    }
-  }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+      if (!hasPermission) {
+        throw new BusinessException(
+          MODULE.VESSEL,
+          [ERROR.NOT_HAVE_PERMISSION],
+          HttpStatus.FORBIDDEN,
+        );
+      }
+    } catch {
+      throw new BusinessException(
+        MODULE.VESSEL,
+        [ERROR.NOT_HAVE_PERMISSION],
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    return true;
   }
 }
