@@ -1,6 +1,8 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class UpdateVesselDto {
+  id: string;
+
   @IsNotEmpty()
   vsl_cd: string;
 

@@ -27,6 +27,7 @@ export enum ERROR {
   VESSEL_CODE_HAS_BEEN_USED = 'Vessel code has been used!',
   VESSEL_NOT_FOUND = 'Vessel not found!',
   NOT_HAVE_PERMISSION = "You don't have permission to perform this action!",
+  SOMETHING_WENT_WRONG = 'Something went wrong. Please try again later!',
 }
 
 export const jwtConstants = {

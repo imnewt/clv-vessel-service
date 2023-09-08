@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 
-import { VesselModule } from '@vessel/vessel.module';
-import { databaseConfig } from '@shared/configs/databaseConfig';
+import { ApplicationModule } from '@application/application.module';
+import { DatabaseModule } from '@infrastructure/database/database.module';
+import { jwtConfig } from '@shared/configs/jwtConfig';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(databaseConfig), VesselModule],
+  imports: [ApplicationModule, DatabaseModule, JwtModule.register(jwtConfig)],
 })
 export class AppModule {}

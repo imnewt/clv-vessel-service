@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-import { PERMISSION_KEY } from '@shared/decorators/permission.decorator';
-import { BusinessException } from '@shared/exceptions/business.exception';
-import { ERROR, MODULE } from '@shared/utilities/constants';
+import { PERMISSION_KEY } from '../decorators/permission.decorator';
+import { BusinessException } from '../exceptions/business.exception';
+import { ERROR, MODULE } from '../utilities/constants';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {

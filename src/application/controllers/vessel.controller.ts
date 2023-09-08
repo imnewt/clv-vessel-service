@@ -1,27 +1,29 @@
 import {
-  Body,
   Controller,
-  Delete,
   Get,
-  Param,
-  Patch,
   Post,
+  Delete,
+  Param,
+  Body,
+  Inject,
   Query,
+  Patch,
 } from '@nestjs/common';
 
-import { VesselService } from '@vessel/services/vessel.service';
-import { CreateVesselDto } from '@vessel/dtos/create-vessel.dto';
-import { UpdateVesselDto } from '@vessel/dtos/update-vessel.dto';
+import { CreateVesselDto, UpdateVesselDto } from '../dtos';
+import { IVesselService } from '@domain/services/vessel.service.interface';
 import { Permission } from '@shared/decorators/permission.decorator';
 import { PERMISSION } from '@shared/utilities/constants';
 
 @Controller('vessels')
 export class VesselController {
-  constructor(private readonly vesselService: VesselService) {}
+  constructor(
+    @Inject(IVesselService) private readonly vesselService: IVesselService,
+  ) {}
 
   @Permission(PERMISSION.READ_VESSEL)
   @Get()
-  getAllVessels(
+  getVessels(
     @Query()
     query: {
       searchTerm: string;
@@ -30,7 +32,7 @@ export class VesselController {
     },
   ) {
     const { searchTerm, pageNumber, pageSize } = query;
-    return this.vesselService.getAllVessels({
+    return this.vesselService.getVessels({
       searchTerm,
       pageNumber,
       pageSize,
@@ -39,7 +41,7 @@ export class VesselController {
 
   @Permission(PERMISSION.READ_VESSEL)
   @Get(':id')
-  async getVesselById(@Param('id') vesselId: string) {
+  getVesselById(@Param('id') vesselId: string) {
     return this.vesselService.getVesselById(vesselId);
   }
 
