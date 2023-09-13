@@ -17,92 +17,52 @@ export class VesselServiceImplementation implements IVesselService {
   async getVessels(
     filter: FilterDto,
   ): Promise<{ vessels: Vessel[]; total: number }> {
-    try {
-      return await this.vesselRepository.getVessels(filter);
-    } catch {
-      throw new BusinessException(
-        MODULE.VESSEL,
-        [ERROR.SOMETHING_WENT_WRONG],
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.vesselRepository.getVessels(filter);
   }
 
   async getVesselById(vesselId: string): Promise<Vessel | null> {
-    try {
-      const vessel = await this.vesselRepository.getVesselById(vesselId);
-      if (!vessel) {
-        throw new BusinessException(
-          MODULE.VESSEL,
-          [ERROR.VESSEL_NOT_FOUND],
-          HttpStatus.NOT_FOUND,
-        );
-      }
-      return vessel;
-    } catch {
+    const vessel = await this.vesselRepository.getVesselById(vesselId);
+    if (!vessel) {
       throw new BusinessException(
         MODULE.VESSEL,
-        [ERROR.SOMETHING_WENT_WRONG],
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        [ERROR.VESSEL_NOT_FOUND],
+        HttpStatus.NOT_FOUND,
       );
     }
+    return vessel;
   }
 
   async createVessel(vessel: Vessel): Promise<Vessel> {
-    try {
-      const existedVessel = await this.vesselRepository.getVesselByCode(
-        vessel.vsl_cd,
-      );
-      if (existedVessel) {
-        throw new BusinessException(
-          MODULE.VESSEL,
-          [ERROR.VESSEL_CODE_HAS_BEEN_USED],
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-      const newVessel = {
-        ...vessel,
-        cre_dt: new Date(),
-        upd_dt: new Date(),
-      };
-      return this.vesselRepository.saveVessel(newVessel);
-    } catch {
+    const existedVessel = await this.vesselRepository.getVesselByCode(
+      vessel.vsl_cd,
+    );
+    if (existedVessel) {
       throw new BusinessException(
         MODULE.VESSEL,
-        [ERROR.SOMETHING_WENT_WRONG],
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        [ERROR.VESSEL_CODE_HAS_BEEN_USED],
+        HttpStatus.BAD_REQUEST,
       );
     }
+    const newVessel = {
+      ...vessel,
+      cre_dt: new Date(),
+      upd_dt: new Date(),
+    };
+    return this.vesselRepository.saveVessel(newVessel);
   }
 
   async updateVessel(vesselId: string, vessel: Vessel): Promise<Vessel> {
-    try {
-      const existedVessel = await this.getVesselById(vesselId);
-      const updatedVessel = {
-        ...existedVessel,
-        ...vessel,
-        upd_dt: new Date(),
-      };
-      return this.vesselRepository.saveVessel(updatedVessel);
-    } catch {
-      throw new BusinessException(
-        MODULE.VESSEL,
-        [ERROR.SOMETHING_WENT_WRONG],
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    const existedVessel = await this.getVesselById(vesselId);
+    const updatedVessel = {
+      ...existedVessel,
+      ...vessel,
+      upd_dt: new Date(),
+    };
+    return this.vesselRepository.saveVessel(updatedVessel);
   }
 
   async deleteVessel(vesselId: string): Promise<void> {
-    try {
-      const vessel = await this.getVesselById(vesselId);
-      await this.vesselRepository.deleteVessel(vessel);
-    } catch {
-      throw new BusinessException(
-        MODULE.VESSEL,
-        [ERROR.SOMETHING_WENT_WRONG],
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    const vessel = await this.getVesselById(vesselId);
+    await this.vesselRepository.deleteVessel(vessel);
   }
 }
