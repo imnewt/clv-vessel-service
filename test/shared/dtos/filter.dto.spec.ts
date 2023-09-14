@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
 
-import { FilterDto } from '@shared/dtos/filter.dto';
+import { FilterDto } from '@domain/dtos/filter.dto';
 
 describe('FilterDto', () => {
   it('should be defined', () => {

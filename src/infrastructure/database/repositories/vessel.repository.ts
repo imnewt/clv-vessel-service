@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike } from 'typeorm';
 
 import { Vessel } from '../entities/vessel.entity';
-import { IVesselRepository } from '@domain/repositories/vessel.repository.interface';
-import { FilterDto } from '@shared/dtos/filter.dto';
+import { IVesselRepository } from '@domain/use-cases/vessel/vessel.repository.interface';
+import { FilterDto } from '@domain/dtos/filter.dto';
 
 @Injectable()
 export class TypeOrmVesselRepository implements IVesselRepository {

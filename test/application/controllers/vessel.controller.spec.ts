@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus } from '@nestjs/common';
 
 import { VesselController } from '@application/controllers/vessel.controller';
-import { CreateVesselDto, UpdateVesselDto } from '@application/dtos';
-import { IVesselService } from '@domain/services/vessel.service.interface';
-import { Vessel } from '@infrastructure/persistence/typeorm/entities/vessel.entity';
-import { BusinessException } from '@shared/exceptions/business.exception';
-import { ERROR, MODULE } from '@shared/utilities/constants';
+import { CreateVesselDto, UpdateVesselDto } from '@domain/dtos';
+import { IVesselService } from '@domain/use-cases/vessel';
+import { BusinessException } from '@domain/exceptions/business.exception';
+import { ERROR, MODULE } from '@domain/utilities/constants';
+import { Vessel } from '@infrastructure/database/entities/vessel.entity';
 
 describe('VesselController', () => {
   let vesselController: VesselController;

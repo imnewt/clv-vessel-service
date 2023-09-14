@@ -10,10 +10,10 @@ import {
   Patch,
 } from '@nestjs/common';
 
-import { CreateVesselDto, UpdateVesselDto } from '../dtos';
-import { IVesselService } from '@domain/services/vessel.service.interface';
-import { Permission } from '@shared/decorators/permission.decorator';
-import { PERMISSION } from '@shared/utilities/constants';
+import { CreateVesselDto, UpdateVesselDto } from '@domain/dtos';
+import { IVesselService } from '@domain/use-cases/vessel';
+import { Permission } from '@domain/decorators/permission.decorator';
+import { PERMISSION } from '@domain/utilities/constants';
 
 @Controller('vessels')
 export class VesselController {

@@ -1,4 +1,4 @@
-import { CreateVesselDto } from '@application/dtos';
+import { CreateVesselDto } from '@domain/dtos';
 import { validate } from 'class-validator';
 
 describe('CreateVesselDto', () => {

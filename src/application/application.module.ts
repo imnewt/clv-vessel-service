@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { VesselController } from './controllers/vessel.controller';
 import { DomainModule } from '@domain/domain.module';
-import { IVesselService } from '@domain/services/vessel.service.interface';
-import { VesselServiceImplementation } from '@domain/implementations/vessel.service.implementation';
+import { IVesselService, VesselService } from '@domain/use-cases/vessel';
 
 @Module({
   imports: [DomainModule],
@@ -11,7 +10,7 @@ import { VesselServiceImplementation } from '@domain/implementations/vessel.serv
   providers: [
     {
       provide: IVesselService,
-      useClass: VesselServiceImplementation,
+      useClass: VesselService,
     },
   ],
 })

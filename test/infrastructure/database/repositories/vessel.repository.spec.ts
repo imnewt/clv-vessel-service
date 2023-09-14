@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { TypeOrmVesselRepository } from '@infrastructure/persistence/typeorm/repositories/vessel.repository';
-import { Vessel } from '@infrastructure/persistence/typeorm/entities/vessel.entity';
-import { FilterDto } from '@shared/dtos/filter.dto';
+import { FilterDto } from '@domain/dtos';
+import { TypeOrmVesselRepository } from '@infrastructure/database/repositories';
+import { Vessel } from '@infrastructure/database/entities/vessel.entity';
 
 describe('TypeOrmVesselRepository', () => {
   let vesselRepository: TypeOrmVesselRepository;

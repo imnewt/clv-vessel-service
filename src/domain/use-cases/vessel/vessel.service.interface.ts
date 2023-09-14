@@ -1,5 +1,5 @@
-import { Vessel } from '../models/vessel.model';
-import { FilterDto } from '@shared/dtos/filter.dto';
+import { Vessel } from '../../models/vessel.model';
+import { FilterDto } from '../../dtos/filter.dto';
 
 export interface IVesselService {
   getVessels(filter: FilterDto): Promise<{ vessels: Vessel[]; total: number }>;

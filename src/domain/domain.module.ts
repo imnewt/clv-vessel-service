@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { TypeOrmPersistenceModule } from '@infrastructure/persistence/typeorm/typeorm.module';
+import { InfrastructureModule } from '@infrastructure/infrastructure.module';
 
 @Module({
-  imports: [TypeOrmPersistenceModule],
-  exports: [TypeOrmPersistenceModule],
+  imports: [InfrastructureModule],
+  exports: [InfrastructureModule],
 })
 export class DomainModule {}

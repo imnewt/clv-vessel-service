@@ -1,14 +1,14 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 
-import { Vessel } from '../models/vessel.model';
-import { IVesselService } from '../services/vessel.service.interface';
-import { IVesselRepository } from '../repositories/vessel.repository.interface';
-import { BusinessException } from '@shared/exceptions/business.exception';
-import { ERROR, MODULE } from '@shared/utilities/constants';
-import { FilterDto } from '@shared/dtos/filter.dto';
+import { IVesselService } from './vessel.service.interface';
+import { IVesselRepository } from './vessel.repository.interface';
+import { Vessel } from '@domain/models';
+import { BusinessException } from '@domain/exceptions/business.exception';
+import { ERROR, MODULE } from '@domain/utilities/constants';
+import { FilterDto } from '@domain/dtos/filter.dto';
 
 @Injectable()
-export class VesselServiceImplementation implements IVesselService {
+export class VesselService implements IVesselService {
   constructor(
     @Inject(IVesselRepository)
     private readonly vesselRepository: IVesselRepository,

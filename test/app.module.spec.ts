@@ -3,8 +3,8 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { AppModule } from '@src/app.module';
 import { ApplicationModule } from '@application/application.module';
-import { DatabaseModule } from '@infrastructure/database/database.module';
-import { jwtConfig } from '@shared/configs/jwtConfig';
+import { InfrastructureModule } from '@infrastructure/infrastructure.module';
+import { jwtConfig } from '@infrastructure/configs/jwt.config';
 
 describe('AppModule', () => {
   let appModule: TestingModule;
@@ -32,9 +32,9 @@ describe('AppModule', () => {
     expect(imports).toContain(ApplicationModule);
   });
 
-  it('should import DatabaseModule', () => {
+  it('should import InfrastructureModule', () => {
     const imports = Reflect.getMetadata('imports', AppModule);
-    expect(imports).toContain(DatabaseModule);
+    expect(imports).toContain(InfrastructureModule);
   });
 
   it('should import JwtModule', () => {

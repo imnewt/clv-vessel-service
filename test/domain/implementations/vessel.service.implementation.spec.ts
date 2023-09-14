@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus } from '@nestjs/common';
 
-import { CreateVesselDto, UpdateVesselDto } from '@application/dtos';
-import { IVesselRepository } from '@domain/repositories/vessel.repository.interface';
+import { CreateVesselDto, UpdateVesselDto } from '@domain/dtos';
+import { IVesselRepository } from '@domain/use-cases/vessel/vessel.repository.interface';
 import { VesselServiceImplementation } from '@domain/implementations/vessel.service.implementation';
-import { Vessel } from '@infrastructure/persistence/typeorm/entities/vessel.entity';
+import { Vessel } from '@infrastructure/database/entities/vessel.entity';
 import { BusinessException } from '@shared/exceptions/business.exception';
 import { ERROR, MODULE } from '@shared/utilities/constants';
 
