@@ -1,9 +1,9 @@
 import { Reflector } from '@nestjs/core';
 import { HttpStatus } from '@nestjs/common';
 
-import { PermissionGuard } from '@shared/guards/permissions.guard';
-import { BusinessException } from '@shared/exceptions/business.exception';
-import { ERROR, MODULE } from '@shared/utilities/constants';
+import { PermissionGuard } from '@domain/guards/permissions.guard';
+import { BusinessException } from '@domain/exceptions/business.exception';
+import { ERROR, MODULE } from '@domain/utilities/constants';
 
 describe('PermissionGuard', () => {
   let permissionGuard: PermissionGuard;

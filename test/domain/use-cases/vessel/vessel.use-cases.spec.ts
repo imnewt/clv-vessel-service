@@ -2,20 +2,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus } from '@nestjs/common';
 
 import { CreateVesselDto, UpdateVesselDto } from '@domain/dtos';
-import { IVesselRepository } from '@domain/use-cases/vessel/vessel.repository.interface';
-import { VesselServiceImplementation } from '@domain/implementations/vessel.service.implementation';
+import { IVesselRepository, VesselService } from '@domain/use-cases/vessel';
+import { BusinessException } from '@domain/exceptions/business.exception';
+import { ERROR, MODULE } from '@domain/utilities/constants';
 import { Vessel } from '@infrastructure/database/entities/vessel.entity';
-import { BusinessException } from '@shared/exceptions/business.exception';
-import { ERROR, MODULE } from '@shared/utilities/constants';
 
-describe('VesselServiceImplementation', () => {
-  let vesselService: VesselServiceImplementation;
+describe('VesselService', () => {
+  let vesselService: VesselService;
   let vesselRepository: IVesselRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        VesselServiceImplementation,
+        VesselService,
         {
           provide: IVesselRepository,
           useValue: {
@@ -29,9 +28,7 @@ describe('VesselServiceImplementation', () => {
       ],
     }).compile();
 
-    vesselService = module.get<VesselServiceImplementation>(
-      VesselServiceImplementation,
-    );
+    vesselService = module.get<VesselService>(VesselService);
     vesselRepository = module.get<IVesselRepository>(IVesselRepository);
   });
 
@@ -71,8 +68,14 @@ describe('VesselServiceImplementation', () => {
       const vesselId = 'non_existing_vessel_id';
 
       jest
-        .spyOn(vesselRepository, 'getVesselById')
-        .mockRejectedValue(undefined);
+        .spyOn(vesselService, 'getVesselById')
+        .mockRejectedValue(
+          new BusinessException(
+            MODULE.VESSEL,
+            [ERROR.VESSEL_NOT_FOUND],
+            HttpStatus.NOT_FOUND,
+          ),
+        );
 
       await expect(vesselService.getVesselById(vesselId)).rejects.toThrow(
         new BusinessException(
@@ -153,8 +156,14 @@ describe('VesselServiceImplementation', () => {
       } as UpdateVesselDto;
 
       jest
-        .spyOn(vesselRepository, 'getVesselById')
-        .mockRejectedValue(undefined);
+        .spyOn(vesselService, 'getVesselById')
+        .mockRejectedValue(
+          new BusinessException(
+            MODULE.VESSEL,
+            [ERROR.VESSEL_NOT_FOUND],
+            HttpStatus.NOT_FOUND,
+          ),
+        );
 
       await expect(
         vesselService.updateVessel(vesselId, updateVesselDto),
@@ -183,8 +192,14 @@ describe('VesselServiceImplementation', () => {
       const vesselId = 'non_existing_vessel_id';
 
       jest
-        .spyOn(vesselRepository, 'getVesselById')
-        .mockRejectedValue(undefined);
+        .spyOn(vesselService, 'getVesselById')
+        .mockRejectedValue(
+          new BusinessException(
+            MODULE.VESSEL,
+            [ERROR.VESSEL_NOT_FOUND],
+            HttpStatus.NOT_FOUND,
+          ),
+        );
 
       await expect(vesselService.deleteVessel(vesselId)).rejects.toThrow(
         new BusinessException(

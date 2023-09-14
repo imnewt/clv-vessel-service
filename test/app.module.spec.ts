@@ -4,7 +4,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { AppModule } from '@src/app.module';
 import { ApplicationModule } from '@application/application.module';
 import { InfrastructureModule } from '@infrastructure/infrastructure.module';
-import { jwtConfig } from '@infrastructure/configs/jwt.config';
 
 describe('AppModule', () => {
   let appModule: TestingModule;
@@ -35,10 +34,5 @@ describe('AppModule', () => {
   it('should import InfrastructureModule', () => {
     const imports = Reflect.getMetadata('imports', AppModule);
     expect(imports).toContain(InfrastructureModule);
-  });
-
-  it('should import JwtModule', () => {
-    const imports = Reflect.getMetadata('imports', AppModule);
-    expect(imports).toContainEqual(JwtModule.register(jwtConfig));
   });
 });

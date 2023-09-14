@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ArgumentsHost } from '@nestjs/common';
 
 import { AppModule } from '@src/app.module';
-import { CustomExceptionFilter } from '@shared/filters/exception.filter';
+import { CustomExceptionFilter } from '@domain/filters/exception.filter';
 
 describe('AppModule', () => {
   let app;

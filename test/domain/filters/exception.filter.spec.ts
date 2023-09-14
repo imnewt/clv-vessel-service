@@ -1,11 +1,11 @@
 import { ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Response, Request } from 'express';
 
-import { BusinessException } from '@shared/exceptions/business.exception';
+import { BusinessException } from '@domain/exceptions/business.exception';
 import {
   ApiError,
   CustomExceptionFilter,
-} from '@shared/filters/exception.filter';
+} from '@domain/filters/exception.filter';
 
 describe('CustomExceptionFilter', () => {
   let customExceptionFilter: CustomExceptionFilter;
