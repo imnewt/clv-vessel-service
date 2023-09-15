@@ -46,7 +46,7 @@ export class VesselController {
   }
 
   @Permission(PERMISSION.CREATE_VESSEL)
-  @Post('/create')
+  @Post()
   createVessel(@Body() createVesselDto: CreateVesselDto) {
     return this.vesselService.createVessel(createVesselDto);
   }
